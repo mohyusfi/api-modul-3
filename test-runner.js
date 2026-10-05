@@ -28,40 +28,43 @@ async function runTests() {
     if (res.status !== 200) throw new Error(`Status ${res.status}`);
     const data = await res.json();
     if (!Array.isArray(data) || data.length === 0) throw new Error('Data bukan array atau kosong');
-    if (!data[0].id || !data[0].name || !data[0].region || !data[0].category) throw new Error('Struktur field tidak lengkap');
+    if (!data[0].id || !data[0].fullname || !data[0].email || !data[0].address || !data[0].phone_number || !data[0].gender || !data[0].status) throw new Error('Struktur field tidak lengkap');
   });
 
-  await assertCase('2. GET /destinations?category=pantai - Filter kategori ditemukan (200)', async () => {
-    const res = await fetch(`${BASE_URL}/destinations?category=pantai`);
+  await assertCase('2. GET /destinations?gender=female - Filter gender ditemukan (200)', async () => {
+    const res = await fetch(`${BASE_URL}/destinations?gender=female`);
     if (res.status !== 200) throw new Error(`Status ${res.status}`);
     const data = await res.json();
     if (!Array.isArray(data)) throw new Error('Bukan array');
-    const invalid = data.find(d => d.category !== 'pantai');
-    if (invalid) throw new Error(`Ditemukan item dengan kategori salah: ${invalid.category}`);
+    const invalid = data.find(d => d.gender !== 'female');
+    if (invalid) throw new Error(`Ditemukan item dengan gender salah: ${invalid.gender}`);
   });
 
-  await assertCase('3. GET /destinations?category=pegunungan_salju - Filter tidak ada hasil (200)', async () => {
-    const res = await fetch(`${BASE_URL}/destinations?category=pegunungan_salju`);
+  await assertCase('3. GET /destinations?gender=other - Filter tidak ada hasil (200)', async () => {
+    const res = await fetch(`${BASE_URL}/destinations?gender=other`);
     if (res.status !== 200) throw new Error(`Status ${res.status}`);
     const data = await res.json();
     if (!Array.isArray(data) || data.length !== 0) throw new Error('Harusnya menghasilkan array kosong []');
   });
 
-  await assertCase('4. POST /destinations - Tambah destinasi baru (201)', async () => {
+  await assertCase('4. POST /destinations - Tambah user baru (201)', async () => {
     const res = await fetch(`${BASE_URL}/destinations`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: 'Pusentasi (Pusat Laut)',
-        region: 'Donggala',
-        category: 'alam'
+        fullname: 'Bambang Pamungkas',
+        email: 'bambang.pamungkas@example.com',
+        address: 'Jl. Mawar No. 15, Palu',
+        phone_number: '081234567899',
+        gender: 'male',
+        status: 'active'
       })
     });
     if (res.status !== 201) throw new Error(`Status ${res.status}`);
     const loc = res.headers.get('location');
     if (!loc || !loc.startsWith('/destinations/')) throw new Error(`Header Location salah: ${loc}`);
     const data = await res.json();
-    if (!data.id || data.name !== 'Pusentasi (Pusat Laut)') throw new Error('Data response salah');
+    if (!data.id || data.fullname !== 'Bambang Pamungkas') throw new Error('Data response salah');
     createdId = data.id;
   });
 
@@ -69,7 +72,7 @@ async function runTests() {
     const res = await fetch(`${BASE_URL}/destinations`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'Hanya Nama' })
+      body: JSON.stringify({ fullname: 'Hanya Nama' })
     });
     if (res.status !== 400) throw new Error(`Status ${res.status}`);
     const data = await res.json();
@@ -80,7 +83,14 @@ async function runTests() {
     const res = await fetch(`${BASE_URL}/destinations`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: '   ', region: 'Palu', category: '' })
+      body: JSON.stringify({
+        fullname: '   ',
+        email: 'user@example.com',
+        address: 'Palu',
+        phone_number: '081234567899',
+        gender: 'male',
+        status: ''
+      })
     });
     if (res.status !== 400) throw new Error(`Status ${res.status}`);
     const data = await res.json();
@@ -91,7 +101,7 @@ async function runTests() {
     const res = await fetch(`${BASE_URL}/destinations`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: '{ "name": "Rusak", '
+      body: '{ "fullname": "Rusak", '
     });
     if (res.status !== 400) throw new Error(`Status ${res.status}`);
     const data = await res.json();
@@ -120,6 +130,7 @@ async function runTests() {
     if (res.status !== 200) throw new Error(`Status ${res.status}`);
     const data = await res.json();
     if (data.id !== 1) throw new Error(`ID tidak cocok: ${data.id}`);
+    if (!data.fullname || !data.email) throw new Error('Field user tidak lengkap');
   });
 
   await assertCase('11. GET /destinations/99999 - ID tidak ditemukan (404)', async () => {
@@ -148,14 +159,17 @@ async function runTests() {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: 'Danau Poso (Updated)',
-        region: 'Poso',
-        category: 'danau'
+        fullname: 'Ahmad Dahlan (Updated)',
+        email: 'ahmad.updated@example.com',
+        address: 'Jl. Tadulako No. 12, Palu',
+        phone_number: '081234567801',
+        gender: 'male',
+        status: 'inactive'
       })
     });
     if (res.status !== 200) throw new Error(`Status ${res.status}`);
     const data = await res.json();
-    if (data.name !== 'Danau Poso (Updated)') throw new Error(`Nama tidak terupdate: ${data.name}`);
+    if (data.fullname !== 'Ahmad Dahlan (Updated)') throw new Error(`Nama tidak terupdate: ${data.fullname}`);
   });
 
   await assertCase('15. PUT /destinations/99999 - Update ID tidak ada (404)', async () => {
@@ -163,9 +177,12 @@ async function runTests() {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
-        name: 'Destinasi Fiktif',
-        region: 'Poso',
-        category: 'danau'
+        fullname: 'User Fiktif',
+        email: 'fiktif@example.com',
+        address: 'Tidak Ada',
+        phone_number: '08000000000',
+        gender: 'male',
+        status: 'inactive'
       })
     });
     if (res.status !== 404) throw new Error(`Status ${res.status}`);
@@ -175,7 +192,7 @@ async function runTests() {
     const res = await fetch(`${BASE_URL}/destinations/1`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ name: 'Hanya Nama' })
+      body: JSON.stringify({ fullname: 'Hanya Nama' })
     });
     if (res.status !== 400) throw new Error(`Status ${res.status}`);
   });

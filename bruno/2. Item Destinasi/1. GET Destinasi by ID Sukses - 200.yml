@@ -24,9 +24,12 @@ runtime:
         test("Item memiliki struktur data lengkap", function() {
           const body = res.getBody();
           expect(body.id).to.equal(1);
-          expect(body).to.have.property('name');
-          expect(body).to.have.property('region');
-          expect(body).to.have.property('category');
+          expect(body).to.have.property('fullname');
+          expect(body).to.have.property('email');
+          expect(body).to.have.property('address');
+          expect(body).to.have.property('phone_number');
+          expect(body).to.have.property('gender');
+          expect(body).to.have.property('status');
         });
 
 settings:

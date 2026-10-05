@@ -13,9 +13,12 @@ http:
     type: json
     data: |-
       {
-        "name": "   ",
-        "region": "Palu",
-        "category": ""
+        "fullname": "   ",
+        "email": "user@example.com",
+        "address": "Palu",
+        "phone_number": "081234567899",
+        "gender": "male",
+        "status": ""
       }
 
 runtime:
@@ -32,8 +35,8 @@ runtime:
         test("Field berisi spasi dianggap kosong", function() {
           const body = res.getBody();
           expect(body).to.have.property('error');
-          expect(body.error).to.include('name');
-          expect(body.error).to.include('category');
+          expect(body.error).to.include('fullname');
+          expect(body.error).to.include('status');
         });
 
 settings:

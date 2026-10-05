@@ -13,7 +13,7 @@ http:
     type: json
     data: |-
       {
-        "name": "Hanya Nama Saja"
+        "fullname": "Hanya Fullname Saja"
       }
 
 runtime:

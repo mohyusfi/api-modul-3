@@ -13,9 +13,12 @@ http:
     type: json
     data: |-
       {
-        "name": "Destinasi Fiktif",
-        "region": "Tidak Ada",
-        "category": "fiktif"
+        "fullname": "User Fiktif",
+        "email": "fiktif@example.com",
+        "address": "Tidak Ada",
+        "phone_number": "08000000000",
+        "gender": "male",
+        "status": "inactive"
       }
 
 runtime:

@@ -13,7 +13,7 @@ http:
     type: json
     data: |-
       {
-        "name": "Destinasi Tanpa Region & Category"
+        "fullname": "User Tanpa Field Lengkap"
       }
 
 runtime:
@@ -30,7 +30,7 @@ runtime:
         test("Pesan error menyebutkan field wajib yang belum diisi", function() {
           const body = res.getBody();
           expect(body).to.have.property('error');
-          expect(body.error).to.include('Field wajib belum diisi: region, category');
+          expect(body.error).to.include('Field wajib belum diisi');
         });
 
 settings:

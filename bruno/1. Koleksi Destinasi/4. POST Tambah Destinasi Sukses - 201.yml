@@ -13,9 +13,12 @@ http:
     type: json
     data: |-
       {
-        "name": "Pusentasi (Pusat Laut)",
-        "region": "Donggala",
-        "category": "alam"
+        "fullname": "Bambang Pamungkas",
+        "email": "bambang.pamungkas@example.com",
+        "address": "Jl. Mawar No. 15, Palu",
+        "phone_number": "081234567899",
+        "gender": "male",
+        "status": "active"
       }
 
 runtime:
@@ -23,9 +26,9 @@ runtime:
     - expression: res.status
       operator: eq
       value: "201"
-    - expression: res.body.name
+    - expression: res.body.fullname
       operator: eq
-      value: "Pusentasi (Pusat Laut)"
+      value: "Bambang Pamungkas"
   scripts:
     - type: tests
       code: |
@@ -35,9 +38,12 @@ runtime:
         test("Item berhasil ditambahkan dengan id baru", function() {
           const body = res.getBody();
           expect(body).to.have.property('id');
-          expect(body.name).to.equal("Pusentasi (Pusat Laut)");
-          expect(body.region).to.equal("Donggala");
-          expect(body.category).to.equal("alam");
+          expect(body.fullname).to.equal("Bambang Pamungkas");
+          expect(body.email).to.equal("bambang.pamungkas@example.com");
+          expect(body.address).to.equal("Jl. Mawar No. 15, Palu");
+          expect(body.phone_number).to.equal("081234567899");
+          expect(body.gender).to.equal("male");
+          expect(body.status).to.equal("active");
           bru.setVar('createdId', body.id);
         });
         test("Header Location dikembalikan dengan format yang benar", function() {

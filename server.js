@@ -20,7 +20,7 @@ function kirimError(res, statusCode, pesan) {
 }
 
 // --------- helper request ---------
-const FIELD_WAJIB = ['name', 'region', 'category'];
+const FIELD_WAJIB = ['fullname', 'email', 'address', 'phone_number', 'gender', 'status'];
 
 function buatError(statusCode, pesan) {
   const err = new Error(pesan);
@@ -66,9 +66,13 @@ async function simpanData(data) {
 // --------- handler ---------
 async function daftarDestinasi(req, res, url) {
   let data = await bacaData();
-  const kategori = url.searchParams.get('category');
-  if (kategori) {
-    data = data.filter((item) => item.category === kategori);
+  const gender = url.searchParams.get('gender');
+  if (gender) {
+    data = data.filter((item) => item.gender === gender);
+  }
+  const status = url.searchParams.get('status');
+  if (status) {
+    data = data.filter((item) => item.status === status);
   }
   kirimJSON(res, 200, data);
 }
@@ -84,9 +88,12 @@ async function tambahDestinasi(req, res) {
   const idBaru = data.length === 0 ? 1 : Math.max(...data.map((d) => d.id)) + 1;
   const item = {
     id: idBaru,
-    name: input.name.trim(),
-    region: input.region.trim(),
-    category: input.category.trim()
+    fullname: input.fullname.trim(),
+    email: input.email.trim(),
+    address: input.address.trim(),
+    phone_number: input.phone_number.trim(),
+    gender: input.gender.trim(),
+    status: input.status.trim()
   };
 
   data.push(item);
@@ -120,9 +127,12 @@ async function ubahDestinasi(req, res, id) {
 
   data[index] = {
     id,
-    name: input.name.trim(),
-    region: input.region.trim(),
-    category: input.category.trim()
+    fullname: input.fullname.trim(),
+    email: input.email.trim(),
+    address: input.address.trim(),
+    phone_number: input.phone_number.trim(),
+    gender: input.gender.trim(),
+    status: input.status.trim()
   };
   await simpanData(data);
   kirimJSON(res, 200, data[index]);

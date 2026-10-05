@@ -1,5 +1,5 @@
 info:
-  name: "3. GET Filter Kategori Kosong - 200"
+  name: "3. GET Filter Gender Kosong - 200"
   type: http
   seq: 3
 
@@ -7,8 +7,8 @@ http:
   method: GET
   url: "{{baseUrl}}/destinations"
   params:
-    - name: category
-      value: "pegunungan_salju"
+    - name: gender
+      value: "other"
       type: query
 
 runtime:
@@ -25,7 +25,7 @@ runtime:
         test("Status code is 200 OK", function() {
           expect(res.getStatus()).to.equal(200);
         });
-        test("Array kosong jika kategori tidak ada", function() {
+        test("Array kosong jika gender tidak ada", function() {
           const body = res.getBody();
           expect(Array.isArray(body)).to.be.true;
           expect(body.length).to.equal(0);

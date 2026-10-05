@@ -1,12 +1,12 @@
 [
   {
     "id": 1,
-    "fullname": "Ahmad Dahlan",
-    "email": "ahmad.dahlan@example.com",
+    "fullname": "Ahmad Dahlan (Updated by Bruno)",
+    "email": "ahmad.updated@example.com",
     "address": "Jl. Tadulako No. 12, Palu",
     "phone_number": "081234567801",
     "gender": "male",
-    "status": "active"
+    "status": "inactive"
   },
   {
     "id": 2,

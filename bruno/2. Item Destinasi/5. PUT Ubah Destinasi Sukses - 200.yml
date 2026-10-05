@@ -13,9 +13,12 @@ http:
     type: json
     data: |-
       {
-        "name": "Danau Poso (Updated by Bruno)",
-        "region": "Poso",
-        "category": "danau"
+        "fullname": "Ahmad Dahlan (Updated by Bruno)",
+        "email": "ahmad.updated@example.com",
+        "address": "Jl. Tadulako No. 12, Palu",
+        "phone_number": "081234567801",
+        "gender": "male",
+        "status": "inactive"
       }
 
 runtime:
@@ -23,19 +26,20 @@ runtime:
     - expression: res.status
       operator: eq
       value: "200"
-    - expression: res.body.name
+    - expression: res.body.fullname
       operator: eq
-      value: "Danau Poso (Updated by Bruno)"
+      value: "Ahmad Dahlan (Updated by Bruno)"
   scripts:
     - type: tests
       code: |
         test("Status code is 200 OK", function() {
           expect(res.getStatus()).to.equal(200);
         });
-        test("Destinasi berhasil diupdate", function() {
+        test("User berhasil diupdate", function() {
           const body = res.getBody();
           expect(body.id).to.equal(1);
-          expect(body.name).to.equal("Danau Poso (Updated by Bruno)");
+          expect(body.fullname).to.equal("Ahmad Dahlan (Updated by Bruno)");
+          expect(body.status).to.equal("inactive");
         });
 
 settings:
