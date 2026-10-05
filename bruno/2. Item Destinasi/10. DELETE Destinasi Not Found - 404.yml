@@ -1,0 +1,31 @@
+info:
+  name: "10. DELETE Destinasi Not Found - 404"
+  type: http
+  seq: 10
+
+http:
+  method: DELETE
+  url: "{{baseUrl}}/destinations/{{nonExistentId}}"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "404"
+  scripts:
+    - type: tests
+      code: |
+        test("Status code is 404 Not Found", function() {
+          expect(res.getStatus()).to.equal(404);
+        });
+        test("Pesan error destinasi tidak ditemukan", function() {
+          const body = res.getBody();
+          expect(body.error).to.include('tidak ditemukan');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

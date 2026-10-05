@@ -1,0 +1,33 @@
+info:
+  name: "8. POST Method Not Allowed pada Item - 405"
+  type: http
+  seq: 8
+
+http:
+  method: POST
+  url: "{{baseUrl}}/destinations/1"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "405"
+  scripts:
+    - type: tests
+      code: |
+        test("Status code is 405 Method Not Allowed", function() {
+          expect(res.getStatus()).to.equal(405);
+        });
+        test("Header Allow bernilai GET, PUT, DELETE", function() {
+          const allow = res.getHeader('allow');
+          expect(allow).to.include('GET');
+          expect(allow).to.include('PUT');
+          expect(allow).to.include('DELETE');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

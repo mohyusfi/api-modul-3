@@ -1,0 +1,32 @@
+info:
+  name: "8. PUT Method Not Allowed pada Koleksi - 405"
+  type: http
+  seq: 8
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/destinations"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "405"
+  scripts:
+    - type: tests
+      code: |
+        test("Status code is 405 Method Not Allowed", function() {
+          expect(res.getStatus()).to.equal(405);
+        });
+        test("Header Allow bernilai 'GET, POST'", function() {
+          const allow = res.getHeader('allow');
+          expect(allow).to.include('GET');
+          expect(allow).to.include('POST');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

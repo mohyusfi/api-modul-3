@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "fullname": "Ahmad Dahlan",
+    "email": "ahmad.dahlan@example.com",
+    "address": "Jl. Tadulako No. 12, Palu",
+    "phone_number": "081234567801",
+    "gender": "male",
+    "status": "active"
+  },
+  {
+    "id": 2,
+    "fullname": "Siti Nurhaliza",
+    "email": "siti.nurhaliza@example.com",
+    "address": "Jl. Diponegoro No. 45, Palu",
+    "phone_number": "081234567802",
+    "gender": "female",
+    "status": "active"
+  },
+  {
+    "id": 3,
+    "fullname": "Budi Santoso",
+    "email": "budi.santoso@example.com",
+    "address": "Jl. Sam Ratulangi No. 8, Donggala",
+    "phone_number": "081234567803",
+    "gender": "male",
+    "status": "inactive"
+  },
+  {
+    "id": 4,
+    "fullname": "Dewi Sartika",
+    "email": "dewi.sartika@example.com",
+    "address": "Jl. Hasanuddin No. 23, Sigi",
+    "phone_number": "081234567804",
+    "gender": "female",
+    "status": "active"
+  },
+  {
+    "id": 5,
+    "fullname": "Rian Pratama",
+    "email": "rian.pratama@example.com",
+    "address": "Jl. Gajah Mada No. 17, Palu",
+    "phone_number": "081234567805",
+    "gender": "male",
+    "status": "active"
+  },
+  {
+    "id": 6,
+    "fullname": "Putri Anggraini",
+    "email": "putri.anggraini@example.com",
+    "address": "Jl. Trans Sulawesi No. 88, Poso",
+    "phone_number": "081234567806",
+    "gender": "female",
+    "status": "active"
+  },
+  {
+    "id": 7,
+    "fullname": "Fajar Hidayat",
+    "email": "fajar.hidayat@example.com",
+    "address": "Jl. Basuki Rahmat No. 5, Palu",
+    "phone_number": "081234567807",
+    "gender": "male",
+    "status": "inactive"
+  },
+  {
+    "id": 8,
+    "fullname": "Nadia Ramadhani",
+    "email": "nadia.ramadhani@example.com",
+    "address": "Jl. Kartini No. 34, Tojo Una-Una",
+    "phone_number": "081234567808",
+    "gender": "female",
+    "status": "active"
+  },
+  {
+    "id": 9,
+    "fullname": "Reza Gunawan",
+    "email": "reza.gunawan@example.com",
+    "address": "Jl. Moh. Hatta No. 19, Palu",
+    "phone_number": "081234567809",
+    "gender": "male",
+    "status": "active"
+  },
+  {
+    "id": 10,
+    "fullname": "Anisa Rahmawati",
+    "email": "anisa.rahmawati@example.com",
+    "address": "Jl. Pramuka No. 7, Donggala",
+    "phone_number": "081234567810",
+    "gender": "female",
+    "status": "inactive"
+  }
+]

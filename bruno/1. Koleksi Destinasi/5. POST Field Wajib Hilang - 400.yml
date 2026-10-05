@@ -1,0 +1,41 @@
+info:
+  name: "5. POST Field Wajib Hilang - 400"
+  type: http
+  seq: 5
+
+http:
+  method: POST
+  url: "{{baseUrl}}/destinations"
+  headers:
+    - name: Content-Type
+      value: "application/json"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Destinasi Tanpa Region & Category"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+  scripts:
+    - type: tests
+      code: |
+        test("Status code is 400 Bad Request", function() {
+          expect(res.getStatus()).to.equal(400);
+        });
+        test("Pesan error menyebutkan field wajib yang belum diisi", function() {
+          const body = res.getBody();
+          expect(body).to.have.property('error');
+          expect(body.error).to.include('Field wajib belum diisi: region, category');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

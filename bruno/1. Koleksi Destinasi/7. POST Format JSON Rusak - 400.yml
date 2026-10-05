@@ -1,0 +1,38 @@
+info:
+  name: "7. POST Format JSON Rusak - 400"
+  type: http
+  seq: 7
+
+http:
+  method: POST
+  url: "{{baseUrl}}/destinations"
+  headers:
+    - name: Content-Type
+      value: "application/json"
+  body:
+    type: json
+    data: |-
+      { "name": "Format Rusak", 
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+  scripts:
+    - type: tests
+      code: |
+        test("Status code is 400 Bad Request", function() {
+          expect(res.getStatus()).to.equal(400);
+        });
+        test("Error body bukan JSON yang valid", function() {
+          const body = res.getBody();
+          expect(body.error).to.equal('Body request bukan JSON yang valid');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

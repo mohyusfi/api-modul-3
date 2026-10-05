@@ -1,0 +1,53 @@
+info:
+  name: "4. POST Tambah Destinasi Sukses - 201"
+  type: http
+  seq: 4
+
+http:
+  method: POST
+  url: "{{baseUrl}}/destinations"
+  headers:
+    - name: Content-Type
+      value: "application/json"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Pusentasi (Pusat Laut)",
+        "region": "Donggala",
+        "category": "alam"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "201"
+    - expression: res.body.name
+      operator: eq
+      value: "Pusentasi (Pusat Laut)"
+  scripts:
+    - type: tests
+      code: |
+        test("Status code is 201 Created", function() {
+          expect(res.getStatus()).to.equal(201);
+        });
+        test("Item berhasil ditambahkan dengan id baru", function() {
+          const body = res.getBody();
+          expect(body).to.have.property('id');
+          expect(body.name).to.equal("Pusentasi (Pusat Laut)");
+          expect(body.region).to.equal("Donggala");
+          expect(body.category).to.equal("alam");
+          bru.setVar('createdId', body.id);
+        });
+        test("Header Location dikembalikan dengan format yang benar", function() {
+          const loc = res.getHeader('location');
+          expect(loc).to.include('/destinations/');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

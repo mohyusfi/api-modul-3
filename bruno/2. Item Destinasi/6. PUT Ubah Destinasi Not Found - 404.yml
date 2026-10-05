@@ -1,0 +1,42 @@
+info:
+  name: "6. PUT Ubah Destinasi Not Found - 404"
+  type: http
+  seq: 6
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/destinations/{{nonExistentId}}"
+  headers:
+    - name: Content-Type
+      value: "application/json"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Destinasi Fiktif",
+        "region": "Tidak Ada",
+        "category": "fiktif"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "404"
+  scripts:
+    - type: tests
+      code: |
+        test("Status code is 404 Not Found", function() {
+          expect(res.getStatus()).to.equal(404);
+        });
+        test("Pesan error tidak ditemukan", function() {
+          const body = res.getBody();
+          expect(body.error).to.include('tidak ditemukan');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

@@ -1,0 +1,46 @@
+info:
+  name: "5. PUT Ubah Destinasi Sukses - 200"
+  type: http
+  seq: 5
+
+http:
+  method: PUT
+  url: "{{baseUrl}}/destinations/{{existingId}}"
+  headers:
+    - name: Content-Type
+      value: "application/json"
+  body:
+    type: json
+    data: |-
+      {
+        "name": "Danau Poso (Updated by Bruno)",
+        "region": "Poso",
+        "category": "danau"
+      }
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "200"
+    - expression: res.body.name
+      operator: eq
+      value: "Danau Poso (Updated by Bruno)"
+  scripts:
+    - type: tests
+      code: |
+        test("Status code is 200 OK", function() {
+          expect(res.getStatus()).to.equal(200);
+        });
+        test("Destinasi berhasil diupdate", function() {
+          const body = res.getBody();
+          expect(body.id).to.equal(1);
+          expect(body.name).to.equal("Danau Poso (Updated by Bruno)");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false

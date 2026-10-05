@@ -1,0 +1,31 @@
+info:
+  name: "4. GET ID Nol atau Negatif - 400"
+  type: http
+  seq: 4
+
+http:
+  method: GET
+  url: "{{baseUrl}}/destinations/0"
+
+runtime:
+  assertions:
+    - expression: res.status
+      operator: eq
+      value: "400"
+  scripts:
+    - type: tests
+      code: |
+        test("Status code is 400 Bad Request", function() {
+          expect(res.getStatus()).to.equal(400);
+        });
+        test("Pesan error id harus berupa bilangan bulat positif", function() {
+          const body = res.getBody();
+          expect(body.error).to.equal('id harus berupa bilangan bulat positif');
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 0
+  followRedirects: true
+  maxRedirects: 5
+  forwardAuthorizationHeader: false
